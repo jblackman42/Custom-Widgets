@@ -24,15 +24,12 @@ const authComponent = ({ component, props }) => {
   />`;
 };
 
-(() => {
+document.addEventListener("DOMContentLoaded", () => {
   widgetsRegistry.forEach((widget) => {
     const { name, component, useAuth } = widget;
 
     document.querySelectorAll(name).forEach((elem) => {
-      // Create an object to hold the attributes
       const props = {};
-
-      // Loop through attributes and add them to the props object
       for (const attribute of elem.attributes) {
         props[attribute.name] = attribute.value;
       }
@@ -44,4 +41,4 @@ const authComponent = ({ component, props }) => {
       render(renderComp, elem);
     });
   });
-})();
+});

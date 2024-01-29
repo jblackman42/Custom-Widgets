@@ -209,12 +209,13 @@ export default function PHCLogin({ setUserData }) {
     });
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get("cacheKey")) {
-      phcGetAuthToken(urlParams.get("cacheKey")).then((tokenData) => {
+    const cacheKey = sessionStorage.getItem("cachedKey");
+    if (cacheKey) {
+      phcGetAuthToken(cacheKey).then((tokenData) => {
         phcSaveTokens(tokenData);
         phcSaveCSRFToken();
         authenticateUser();
+        sessionStorage.removeItem("cachedKey");
       });
       window.history.replaceState(
         null,
