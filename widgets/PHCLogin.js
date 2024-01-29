@@ -1,6 +1,11 @@
-import { html, useState } from "../util/preactCentral.js";
+import { html, useState, useEffect } from "../util/preactCentral.js";
 
-export default function PHCLogin() {
+export default function PHCLogin({ user, setUser }) {
+  // const [user, setUser] = useState({});
+  // const user = useContext(UserContext);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const localStoragePrefix = "mpp-widgets";
+
   const phcGetAppRoot = () => {
     return "https://my.pureheart.org/widgets";
   };
@@ -20,7 +25,7 @@ export default function PHCLogin() {
     const root = phcGetAppRoot();
     const tokenURL = "".concat(root, `/Home/Tokens?cacheKey=${cacheKey}`);
 
-    return fetch(tokenURL)
+    return fetch(tokenURL) 
       .then((tokenData) => tokenData.json())
       .catch((error) => {
         throw (
@@ -121,9 +126,6 @@ export default function PHCLogin() {
   const getCurrentUser = async () => {
     const root = phcGetAppRoot();
     const userURL = "".concat(root, `/Api/Auth/User`);
-    const token = window.localStorage.getItem(
-      `${localStoragePrefix}_AuthToken`
-    );
 
     return phcGetRequest(userURL)
       .then((userData) => userData)
@@ -190,16 +192,45 @@ export default function PHCLogin() {
         "id_token_hint=".concat(idToken) +
         "&post_logout_redirect_uri=".concat(data.postLogoutRedirectUrl) +
         "&state=".concat(encodeURI(window.location));
-      window.location.replace(logoutURLString);
+      
       phcClearTokens();
+      window.location.replace(logoutURLString);
     });
+
+  const authenticateUser = () => getCurrentUser().then(userData => {
+    if (!userData || !Object.keys(userData).length) return;
+
+    setUser(userData);
+    setIsAuthenticated(true);
+  })
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get("cacheKey")) {
+      phcGetAuthToken(urlParams.get("cacheKey")).then((tokenData) => {
+        phcSaveTokens(tokenData);
+        phcSaveCSRFToken();
+        authenticateUser();
+      });
+      window.history.replaceState(
+        null,
+        null,
+        window.location.origin.toString()
+      );
+    } else {
+      authenticateUser();
+    }
+  }, []);
+
+  // useEffect(() => {
+  //   if (!user || !Object.keys(user).length) return;
+  //   console.log(user);
+  // }, [user])
 
   return html`
     <div class="phc-user-login-container">
-      <button class="phc-btn" id="phc-loginButton">Log In</button>
-      <button class="phc-btn" id="phc-logoutButton" style="display: none;">
-        Log Out
-      </button>
+      ${!isAuthenticated && html`<button class="phc-btn" id="phc-loginButton" onClick=${phcSignIn}>Log In</button>`}
+      ${isAuthenticated && html`<button class="phc-btn" id="phc-logoutButton" onClick=${phcSignOut}>Log Out</button>`}
     </div>
   `;
 }
