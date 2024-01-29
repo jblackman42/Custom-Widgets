@@ -1,8 +1,11 @@
-import { html, useState, useEffect } from "../util/preactCentral.js";
+import {
+  html,
+  useState,
+  useEffect,
+  useContext,
+} from "../util/preactCentral.js";
 
-export default function PHCLogin({ user, setUser }) {
-  // const [user, setUser] = useState({});
-  // const user = useContext(UserContext);
+export default function PHCLogin({ setUserData }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const localStoragePrefix = "mpp-widgets";
 
@@ -25,7 +28,7 @@ export default function PHCLogin({ user, setUser }) {
     const root = phcGetAppRoot();
     const tokenURL = "".concat(root, `/Home/Tokens?cacheKey=${cacheKey}`);
 
-    return fetch(tokenURL) 
+    return fetch(tokenURL)
       .then((tokenData) => tokenData.json())
       .catch((error) => {
         throw (
@@ -192,17 +195,18 @@ export default function PHCLogin({ user, setUser }) {
         "id_token_hint=".concat(idToken) +
         "&post_logout_redirect_uri=".concat(data.postLogoutRedirectUrl) +
         "&state=".concat(encodeURI(window.location));
-      
+
       phcClearTokens();
       window.location.replace(logoutURLString);
     });
 
-  const authenticateUser = () => getCurrentUser().then(userData => {
-    if (!userData || !Object.keys(userData).length) return;
+  const authenticateUser = () =>
+    getCurrentUser().then((userData) => {
+      if (!userData || !Object.keys(userData).length) return;
 
-    setUser(userData);
-    setIsAuthenticated(true);
-  })
+      setUserData(userData);
+      setIsAuthenticated(true);
+    });
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -222,15 +226,16 @@ export default function PHCLogin({ user, setUser }) {
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (!user || !Object.keys(user).length) return;
-  //   console.log(user);
-  // }, [user])
-
   return html`
     <div class="phc-user-login-container">
-      ${!isAuthenticated && html`<button class="phc-btn" id="phc-loginButton" onClick=${phcSignIn}>Log In</button>`}
-      ${isAuthenticated && html`<button class="phc-btn" id="phc-logoutButton" onClick=${phcSignOut}>Log Out</button>`}
+      ${!isAuthenticated &&
+      html`<button class="phc-btn" id="phc-loginButton" onClick=${phcSignIn}>
+        Log In
+      </button>`}
+      ${isAuthenticated &&
+      html`<button class="phc-btn" id="phc-logoutButton" onClick=${phcSignOut}>
+        Log Out
+      </button>`}
     </div>
   `;
 }
