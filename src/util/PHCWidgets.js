@@ -1,6 +1,6 @@
-import { render, html, useState, useEffect } from "./util/preactCentral.js";
-import widgetsRegistry from "./widgets/index.js";
-import { setUser, subscribe, getUser } from "./util/globalUserState.js";
+import { render, html, useState, useEffect } from "./preactCentral.js";
+import widgetsRegistry from "../widgets/index.js";
+import { setUser, subscribe, getUser } from "./globalUserState.js";
 
 const authComponent = ({ component, props }) => {
   const [user, setUserState] = useState(getUser());
@@ -24,7 +24,8 @@ const authComponent = ({ component, props }) => {
   />`;
 };
 
-document.addEventListener("DOMContentLoaded", () => {
+(() => {
+  console.log("is this running?");
   widgetsRegistry.forEach((widget) => {
     const { name, component, useAuth } = widget;
 
@@ -41,4 +42,4 @@ document.addEventListener("DOMContentLoaded", () => {
       render(renderComp, elem);
     });
   });
-});
+})();

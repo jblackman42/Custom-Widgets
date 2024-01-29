@@ -4,25 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Custom Widgets</title>
-  <script>
-    (function() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const cacheKey = urlParams.get('cacheKey');
-      if (cacheKey) {
-        sessionStorage.setItem('cachedKey', cacheKey);
-      }
-    })();
-  </script>
-  <script src="./PHCWidgets.js" type="module"></script>
+  <script id="PHCWidgets" src="./index.js"></script>
+  <!-- <script id="PHCWidgets" src="../dist/bundle.js"></script> -->
   <script id="MPWidgets" src="https://my.pureheart.org/widgets/dist/MPWidgets.js"></script>
   
-  <link rel="stylesheet" href="../styles/main.css">
-  <!-- <link rel="stylesheet" href="../styles/SermonWidgets.css"> -->
+  <link rel="stylesheet" href="./styles/main.css">
 </head>
 <body>
   <h1 id="test">Hello World</h1>
   <phc-user-login></phc-user-login>
   <counter></counter>
   <mpp-my-giving hidesoftcredits="false"></mpp-my-giving>
+
+
 </body>
 </html>

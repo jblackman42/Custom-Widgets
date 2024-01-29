@@ -1,9 +1,4 @@
-import {
-  html,
-  useState,
-  useEffect,
-  useContext,
-} from "../util/preactCentral.js";
+import { html, useState, useEffect } from "../util/preactCentral.js";
 
 export default function PHCLogin({ setUserData }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
