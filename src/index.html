@@ -4,15 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Custom Widgets</title>
-  <script id="PHCWidgets" src="./index.js"></script>
+
   <!-- <script id="PHCWidgets" src="../dist/bundle.js"></script> -->
+  <script id="PHCWidgets" src="./index.js"></script>
   <script id="MPWidgets" src="https://my.pureheart.org/widgets/dist/MPWidgets.js"></script>
-  
-  <link rel="stylesheet" href="./styles/main.css">
 </head>
+<style>
+  body, html {
+    font-family: sans-serif;
+  }
+</style>
 <body>
   <phc-user-login></phc-user-login>
-  <counter></counter>
+  <!-- <counter></counter> -->
+  <phc-article-finder></phc-article-finder>
+  <phc-article></phc-article>
   <!-- <mpp-my-giving></mpp-my-giving> -->
 
 

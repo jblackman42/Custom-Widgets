@@ -50,4 +50,41 @@
   100% {
     transform: rotate(360deg);
   }
+}
+.article-card {
+  width: 100%;
+  max-width: 500px;
+  aspect-ratio: 16/9;
+  position: relative;
+  display: flex;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.article-card .background-image-container {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+.article-card .background-image-container img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.article-card .article-content {
+  display: grid;
+  align-content: end;
+  padding: 2rem;
+  background: linear-gradient(transparent 50%, #000);
+}
+.article-card .article-content * {
+  text-shadow: #000 0 0 8px;
+}
+.article-card .article-content p {
+  margin: 0;
+}
+.article-card .article-content h1 {
+  margin: 0.5rem 0;
 }/*# sourceMappingURL=main.css.map */

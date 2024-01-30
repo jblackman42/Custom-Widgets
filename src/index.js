@@ -8,4 +8,9 @@
   PHCWidgetsScript.src = "./util/PHCWidgets.js";
   PHCWidgetsScript.type = "module";
   document.head.appendChild(PHCWidgetsScript);
+
+  const PHCStyleTag = document.createElement("link");
+  PHCStyleTag.rel = "stylesheet";
+  PHCStyleTag.href = "./styles/main.css";
+  document.head.appendChild(PHCStyleTag);
 })();
