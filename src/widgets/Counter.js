@@ -1,15 +1,10 @@
-import { html, useState, useEffect } from "../util/preactCentral.js";
+import { html } from "../util/preactCentral.js";
+import Loader from "./Loader.js";
 
 export default function Counter({ userData }) {
-  // useEffect(() => {
-  //   console.log(userData);
-  // }, [userData]);
+  if (userData === null) return html`<${Loader} />`;
+  console.log(userData);
+  // if (userData === null) return html`<p>Loading...</p>`;
 
-  return html`
-    <p>
-      ${Object.keys(userData).length
-        ? userData.user.displayName
-        : "User Not Logged In"}
-    </p>
-  `;
+  return !Object.keys(userData).length ? html`<p>User Not Logged In</p>` : html`<p>${userData.user.displayName}</p>`
 }

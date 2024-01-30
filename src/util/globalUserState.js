@@ -1,5 +1,5 @@
 // globalUserState.js
-let user = {};
+let user = null;
 const listeners = new Set();
 
 const setUser = (newUser) => {

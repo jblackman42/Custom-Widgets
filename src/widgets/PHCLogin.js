@@ -1,6 +1,6 @@
 import { html, useState, useEffect } from "../util/preactCentral.js";
 
-export default function PHCLogin({ setUserData }) {
+export default function PHCLogin({ userData, setUserData }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const localStoragePrefix = "mpp-widgets";
 
@@ -10,6 +10,7 @@ export default function PHCLogin({ setUserData }) {
 
   const phcGetAuthConfiguration = () => {
     const root = phcGetAppRoot();
+    // https://{platform domain}/widgets/Api/Auth --- This is the same on every instance of MP (as far as I know)
     const configURL = "".concat(root, "/Api/Auth");
     return fetch(configURL).then(
       (configData) => configData.json(),
@@ -197,7 +198,9 @@ export default function PHCLogin({ setUserData }) {
 
   const authenticateUser = () =>
     getCurrentUser().then((userData) => {
-      if (!userData || !Object.keys(userData).length) return;
+      if (!userData || !Object.keys(userData).length) {
+        setUserData({});
+      };
 
       setUserData(userData);
       setIsAuthenticated(true);
@@ -222,16 +225,27 @@ export default function PHCLogin({ setUserData }) {
     }
   }, []);
 
+  // return html`
+  //   <div class="phc-user-login-container">
+  //     ${!isAuthenticated &&
+  //     html`<button class="phc-btn" id="phc-loginButton" onClick=${phcSignIn}>
+  //       Log In
+  //     </button>`}
+  //     ${isAuthenticated &&
+  //     html`<button class="phc-btn" id="phc-logoutButton" onClick=${phcSignOut}>
+  //       Log Out
+  //     </button>`}
+  //   </div>
+  // `;
+
+  if (userData === null) return;
+  
   return html`
-    <div class="phc-user-login-container">
-      ${!isAuthenticated &&
-      html`<button class="phc-btn" id="phc-loginButton" onClick=${phcSignIn}>
-        Log In
-      </button>`}
-      ${isAuthenticated &&
-      html`<button class="phc-btn" id="phc-logoutButton" onClick=${phcSignOut}>
-        Log Out
-      </button>`}
+  <div class="phc-user-login-container">
+    ${!Object.keys(userData).length
+      ? html`<button class="phc-btn" id="phc-loginButton" onClick=${phcSignIn}>Log In</button>`
+      : html`<button class="phc-btn" id="phc-logoutButton" onClick=${phcSignOut}>Log Out</button>`
+    }
     </div>
   `;
 }

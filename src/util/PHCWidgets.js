@@ -25,9 +25,8 @@ const authComponent = ({ component, props }) => {
 };
 
 (() => {
-  console.log("is this running?");
   widgetsRegistry.forEach((widget) => {
-    const { name, component, useAuth } = widget;
+    const { name, component } = widget;
 
     document.querySelectorAll(name).forEach((elem) => {
       const props = {};
@@ -35,11 +34,7 @@ const authComponent = ({ component, props }) => {
         props[attribute.name] = attribute.value;
       }
 
-      const renderComp = useAuth
-        ? html`<${authComponent} component=${component} props=${props} />`
-        : html`<${component} ...${props} />`;
-
-      render(renderComp, elem);
+      render(html`<${authComponent} component=${component} props=${props} />`, elem);
     });
   });
 })();
