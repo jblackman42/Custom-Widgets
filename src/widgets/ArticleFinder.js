@@ -24,14 +24,14 @@ export default function ArticleFinder() {
     : articles.map((article) => {
         const { PHC_Article_ID, Title, Display_Name, Topic } = article;
         return html`
-          <a class="article-card" href="/src/index.html/?id=1">
+          <a class="article-card" href="/src/index.html?id=1">
             <div class="background-image-container">
               <img
                 src="http://localhost:5000/api/widgets/article-graphic/${PHC_Article_ID}"
                 alt="${Title}"
               />
             </div>
-            <div class="article-content">
+            <div class="article-card-content">
               <p>${Topic}</p>
               <h1>${Title}</h1>
               <p>${Display_Name}</p>

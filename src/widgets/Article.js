@@ -35,8 +35,55 @@ export default function Article() {
       </div>
     `;
 
+  const {
+    PHC_Article_ID,
+    Title,
+    Author_Name,
+    Author_Bio,
+    Body,
+    Publish_Date,
+    Author_Contact_GUID,
+    Author_Facebook_Account,
+    Author_Instagram_Account,
+    Author_Twitter_Account
+  } = article;
   return isLoading
     ? html`<${Loader} />`
     : article &&
-        html`<div dangerouslySetInnerHTML=${{ __html: article.Body }}></div>`;
+        html`
+          <div class="article-card large">
+            <div class="background-image-container">
+              <img
+                src="http://localhost:5000/api/widgets/article-graphic/${PHC_Article_ID}"
+                alt="${Title}"
+              />
+            </div>
+            <div class="article-card-content">
+              <h1>${Title}</h1>
+              <p class="right">${Author_Name}</p>
+              <p class="left">${new Date(Publish_Date).toLocaleDateString('en-us', {month: 'short', day: 'numeric', year: 'numeric'})}</p>
+            </div>
+          </div>
+          <div
+            class="article-content"
+            dangerouslySetInnerHTML=${{ __html: Body }}
+          ></div>
+          <div class="author-container">
+            <div class="author-content">
+              <img
+                class="author-pfp"
+                src="http://localhost:5000/api/widgets/author-graphic/${Author_Contact_GUID}"
+              />
+              <h2 class="author-name">${Author_Name}</h2>
+            </div>
+            <div class="author-bio">
+              <p dangerouslySetInnerHTML=${{ __html: Author_Bio }}></p>
+              <div class="author-socials">
+                ${Author_Facebook_Account && html`<a href="#" target="_blank" style="color: #1877F2;"><i class="fa fa-facebook-square"></i></a>`}
+                ${Author_Instagram_Account && html`<a href="#" target="_blank"><i class="fa fa-instagram" style="color: #d62976;"></i></a>`}
+                ${Author_Twitter_Account && html`<a href="#" target="_blank"><i class="fa fa-twitter-square" style="color: #1DA1F2;"></i></a>`}
+              </div>
+            </div>
+          </div>
+        `;
 }
