@@ -1,9 +1,30 @@
+phc-article-finder {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: .5rem;
+  max-width: max-content;
+  margin: 0 auto;
+
+  @media screen and (max-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media screen and (max-width: 525px) {
+    grid-template-columns: 1fr;
+  }
+}
+
 .article-card {
   width: 100%;
   max-width: 500px;
   aspect-ratio: 16 / 9;
   position: relative;
   display: flex;
+
+  font-size: clamp(.5rem, 1vw, 1rem);
+  // font-size: 1rem;
+  // font-size: 1vw;
+  // font-size: .5rem;
 
   color: white;
   text-decoration: none;
@@ -36,7 +57,7 @@
     align-content: end;
     width: 100%;
 
-    padding: 2rem;
+    padding: 5%;
     background: linear-gradient(transparent 50%, #000);
 
     * {
@@ -119,6 +140,32 @@ phc-article {
         a {
           color: black;
         }
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      flex-direction: column;
+
+      .author-content {
+        display: flex;
+        // align-items: flex-end;
+        align-items: center;
+        border: none;
+        padding: 0;
+
+        .author-pfp {
+          max-width: 60px;
+        }
+
+        .author-name {
+          margin: 0 1rem;
+          font-size: 1.5rem;
+        }
+      }
+
+      .author-bio {
+        padding: 0;
+        padding-top: 1rem;
       }
     }
   }

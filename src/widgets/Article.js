@@ -10,7 +10,10 @@ export default function Article() {
   const articleID = urlParams.get("id");
 
   const getArticle = async (id) => {
-    if (!id) return;
+    if (!id) {
+      setError("Missing Aritcle ID")
+      return null;
+    };
     return fetch(`http://localhost:5000/api/widgets/articles/1`)
       .then((response) => response.json())
       .catch(() => {
