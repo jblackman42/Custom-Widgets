@@ -1,7 +1,7 @@
 import { html, useState, useEffect } from "../util/preactCentral.js";
 import Loader from "./Loader.js";
 
-export default function Article() {
+export default function Article({ requestURL }) {
   const [isLoading, setIsLoading] = useState(true);
   const [article, setArticle] = useState({});
   const [error, setError] = useState(null);
@@ -14,7 +14,7 @@ export default function Article() {
       setError("Missing Aritcle ID")
       return null;
     };
-    return fetch(`http://localhost:5000/api/widgets/articles/1`)
+    return fetch(`${requestURL}/api/widgets/articles/1`)
       .then((response) => response.json())
       .catch(() => {
         setError(
@@ -57,7 +57,7 @@ export default function Article() {
           <div class="article-card large">
             <div class="background-image-container">
               <img
-                src="http://localhost:5000/api/widgets/article-graphic/${PHC_Article_ID}"
+                src="${requestURL}/api/widgets/article-graphic/${PHC_Article_ID}"
                 alt="${Title}"
               />
             </div>
@@ -75,7 +75,7 @@ export default function Article() {
             <div class="author-content">
               <img
                 class="author-pfp"
-                src="http://localhost:5000/api/widgets/author-graphic/${Author_Contact_GUID}"
+                src="${requestURL}/api/widgets/author-graphic/${Author_Contact_GUID}"
               />
               <h2 class="author-name">${Author_Name}</h2>
             </div>

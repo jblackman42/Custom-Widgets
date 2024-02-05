@@ -2,6 +2,8 @@ import { render, html, useState, useEffect } from "./preactCentral.js";
 import widgetsRegistry from "../widgets/index.js";
 import { setUser, subscribe, getUser } from "./globalUserState.js";
 
+const requestURL = 'https://dev.phc.events';
+
 const authComponent = ({ component, props }) => {
   const [user, setUserState] = useState(getUser());
 
@@ -21,6 +23,7 @@ const authComponent = ({ component, props }) => {
     ...${props}
     userData=${user}
     setUserData=${updateGlobalUser}
+    requestURL=${requestURL}
   />`;
 };
 

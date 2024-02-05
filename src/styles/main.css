@@ -51,7 +51,7 @@
     transform: rotate(360deg);
   }
 }
-phc-article-finder {
+.article-card-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.5rem;
@@ -60,12 +60,12 @@ phc-article-finder {
   margin: 0 auto;
 }
 @media screen and (max-width: 768px) {
-  phc-article-finder {
+  .article-card-container {
     grid-template-columns: 1fr 1fr;
   }
 }
 @media screen and (max-width: 525px) {
-  phc-article-finder {
+  .article-card-container {
     grid-template-columns: 1fr;
   }
 }
